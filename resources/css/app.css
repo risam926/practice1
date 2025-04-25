@@ -1,0 +1,19 @@
+.mark{
+    color:red;
+}
+.btn-back {
+    text-align: right;
+    background-color:blue; /* 背景色 */
+    color: #333; /* 文字色 */
+    border: 1px solid #ccc; /* 枠線 */
+    padding: 10px 20px; /* 余白 */
+    border-radius: 5px; /* 角丸 */
+}
+.btn-edit {
+    text-align: left;
+    background-color:orange; /* 背景色 */
+    color: #333; /* 文字色 */
+    border: 1px solid #ccc; /* 枠線 */
+    padding: 10px 20px; /* 余白 */
+    border-radius: 5px; /* 角丸 */
+}
