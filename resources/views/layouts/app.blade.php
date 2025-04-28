@@ -13,11 +13,43 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link href="{{asset('css/app.css')}}" rel="stylesheet">
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
+    <style>
+        .mark{
+    color:red;
+}
+.btn-back {
+    background-color:blue; /* 背景色 */
+    color: #333; /* 文字色 */
+    border: 1px solid #ccc; /* 枠線 */
+    padding: 10px 20px; /* 余白 */
+    border-radius: 5px; /* 角丸 */
+    width: 60px;
+}
+.btn-edit {
+    background-color:orange; /* 背景色 */
+    color: #333; /* 文字色 */
+    border: 1px solid #ccc; /* 枠線 */
+    padding: 10px 20px; /* 余白 */
+    border-radius: 5px; /* 角丸 */
+    width: 60px;
+}
+.btn-success {
+    background-color:green; /* 背景色 */
+    color: #333; /* 文字色 */
+    border: 1px solid #ccc; /* 枠線 */
+    padding: 10px 20px; /* 余白 */
+    border-radius: 5px; /* 角丸 */
+    width: 60px;
+}
+
+
+</style>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">

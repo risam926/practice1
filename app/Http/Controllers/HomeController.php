@@ -59,7 +59,7 @@ class HomeController extends Controller
     public function registSubmit(ProductRequest $request)
     {
         Log::debug($request->all());
-       //①画像ファイルの取得
+    //①画像ファイルの取得
 	$image = $request->file('img_path');
     if($image){
          //②画像ファイルのファイル名を取得
@@ -68,8 +68,7 @@ class HomeController extends Controller
 	$image->storeAs('public/images', $file_name);
       
     }
-   
-      
+
         // トランザクション開始
     DB::beginTransaction();
 

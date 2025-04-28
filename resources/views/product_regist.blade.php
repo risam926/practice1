@@ -47,8 +47,7 @@
                 <button type="submit" class="btn btn-success">登録</button>
             </form>
 
-           
-            <button class="btn btn-back" type="button" onclick="location.href='/home'">戻る</button>
+            <a href="{{ route('home')}}" class="btn btn-back">戻る</a>
 
         </div>
     </div>

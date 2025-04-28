@@ -3,7 +3,9 @@
 @section('title', '商品情報一覧画面')
 
 @section('content')
+<h1>商品一覧画面</h1>
 <div>
+
   <form action="{{ route('home') }}" method="GET">
 
   @csrf
@@ -20,7 +22,7 @@
 </div>
 
 
-<button class="btn btn-primary" type=“button” onclick="location.href='/regist'">新規登録</button>
+<button class="btn btn-primary" type=“button” onclick="location.href='{{route('regist')}}'">新規登録</button>
 
 
       <div class="table-responsive">
@@ -40,7 +42,7 @@
                 @foreach($products as $product)
                 <tr>
                   <td>{{$product->id}}</td>
-                  <td><img src="{{asset($product->img_path)}}" ></td>
+                  <td><img src="{{asset('storage/images/'.$product->img_path)}}" width="100"></td>
                   <td>{{$product->product_name}}</td>
                   <td>{{$product->price}}</td>
                   <td>{{$product->stock}}</td>
