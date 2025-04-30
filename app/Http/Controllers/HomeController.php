@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Models\Company;
-use App\Http\Requests\productRequest;
+use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -45,9 +45,20 @@ class HomeController extends Controller
 
     public function destroy($id)
     { 
+             // トランザクション開始
+    DB::beginTransaction();
+
+    try{
         $products = Product::find($id);
         $products->delete();
-        return redirect()->route('home');
+        DB::commit();
+    }catch (\Exception $e) {
+            DB::rollback();
+            return back();
+    }
+        
+    return redirect()->route('home');
+    
     }
 
     public function showRegistForm() {
