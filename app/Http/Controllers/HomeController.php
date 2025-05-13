@@ -31,31 +31,31 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-
-        // 全データ取得
     $companies = Company::all();
-    $sales = Sale::all();
 
     $query = Product::query();
 
-     // ソートの対象（デフォルトはID）
      $sortColumn = $request->query('column', 'id'); 
 
-     // ソートの方向（デフォルトは昇順）
      $sortDirection = $request->query('direction', 'asc');
  
-     // 許可するカラム名を指定（不正な値の防止）
-     $allowedColumns = ['id', 'price', 'stock'];
+     $allowedColumns = ['id', 'price', 'stock','product_name','company_name'];
  
      if (!in_array($sortColumn, $allowedColumns)) {
          $sortColumn = 'id';
      }
- 
-     // データをソートして取得
-     $products = $query->orderBy($sortColumn, $sortDirection)->get();
-
+     if ($sortColumn === 'company_name') {
+        $query->join('companies', 'products.company_id', '=', 'companies.id')
+              ->orderBy('companies.company_name', $sortDirection)
+              ->select('products.*'); 
+    } else {
+     
+        $query->orderBy($sortColumn, $sortDirection);
+    }
     
-    return view('product', compact('products','companies', 'sales', 'sortColumn','sortDirection'));
+    $products = $query->get();
+
+    return view('product', compact('products','companies', 'sortColumn','sortDirection'));
 
     }
 

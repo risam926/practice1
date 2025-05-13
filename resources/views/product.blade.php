@@ -49,7 +49,13 @@
                 </a>
                 </th>
                 <th scope="col" >商品画像</th>
-                <th scope="col" >  商品名</th>
+                <th scope="col" >
+                <a href="{{ route('home',['column' => 'product_name', 'direction' => request('direction') ==='asc' ? 'desc' : 'asc']) }}">
+                  商品名
+                @if(request('column') === 'product_name')
+                @if(request('direction') === 'asc') ⬆ @else ⬇ @endif
+                @endif
+                </th>
                 <th scope="col" > 
                 <a href="{{ route('home', ['column' => 'price', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc']) }}">
                    価格
@@ -66,7 +72,13 @@
                   @endif
                 </a>
                 </th>
-                <th scope="col" >メーカー名 </th>
+                <th scope="col" >
+                <a href="{{ route('home', ['column' => 'company_name', 'direction' => request('column')==='company_name' && request('direction')==='asc' ? 'desc' : 'asc']) }}">
+                  メーカー名 
+                  @if(request('column')==='company_name')
+                  @if(request('direction')==='asc') ⬆ @else ⬇ @endif
+                  @endif
+                </th>
                 <th scope="col" ></th>
                 <th scope="col" ></th>
                 </tr>
