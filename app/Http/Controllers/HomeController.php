@@ -32,33 +32,94 @@ class HomeController extends Controller
     public function index(Request $request)
     {
 
-         /* テーブルから全てのレコードを取得する */
-           $companies = Company::all();
-           $sales = Sale::all();
-           $products = Product::all();
+        // 全データ取得
+    $companies = Company::all();
+    $sales = Sale::all();
 
-        $keyword = $request->input('keyword');
-        $products = Product::where('product_name', 'LIKE', '%' . $keyword . '%')->get();
+    $query = Product::query();
 
-        return view('product', compact('products', 'keyword','companies','sales'));
+     // ソートの対象（デフォルトはID）
+     $sortColumn = $request->query('column', 'id'); 
+
+     // ソートの方向（デフォルトは昇順）
+     $sortDirection = $request->query('direction', 'asc');
+ 
+     // 許可するカラム名を指定（不正な値の防止）
+     $allowedColumns = ['id', 'price', 'stock'];
+ 
+     if (!in_array($sortColumn, $allowedColumns)) {
+         $sortColumn = 'id';
+     }
+ 
+     // データをソートして取得
+     $products = $query->orderBy($sortColumn, $sortDirection)->get();
+
+    
+    return view('product', compact('products','companies', 'sales', 'sortColumn','sortDirection'));
+
     }
+
+    public function search(Request $request)
+    {   
+    
+        $keyword    = $request->input('keyword');
+        $company_id = $request->input('company_id');
+        $price_min  = $request->input('price_min');
+        $price_max  = $request->input('price_max');
+        $stock_min  = $request->input('stock_min');
+        $stock_max  = $request->input('stock_max');
+
+        
+        $query = Product::query()->with('company');
+
+        if ($keyword) {
+            $query->where('product_name', 'LIKE', '%' . $keyword . '%');
+        }
+        if ($company_id) {
+            $query->where('company_id', $company_id);
+        }
+        if (!is_null($price_min)) {
+            $query->where('price', '>=', $price_min);
+        }
+        if (!is_null($price_max)) {
+            $query->where('price', '<=', $price_max);
+        }
+        if (!is_null($stock_min)) {
+            $query->where('stock', '>=', $stock_min);
+        }
+        if (!is_null($stock_max)) {
+            $query->where('stock', '<=', $stock_max);
+        }
+
+        $products = $query->get();
+
+        return response()->json($products);
+    }
+    
+    
 
     public function destroy($id)
     { 
-             // トランザクション開始
-    DB::beginTransaction();
-
-    try{
-        $products = Product::find($id);
-        $products->delete();
-        DB::commit();
-    }catch (\Exception $e) {
-            DB::rollback();
-            return back();
-    }
-        
-    return redirect()->route('home');
+        // トランザクション開始
+        DB::beginTransaction();
     
+        try {
+            $product = Product::find($id);
+    
+            // 商品が見つからない場合の処理
+            if (!$product) {
+                DB::rollback();
+                return response()->json(['success' => false, 'message' => '商品が見つかりません'], 404);
+            }
+    
+            $product->delete();
+            DB::commit();
+    
+            return response()->json(['success' => true]); // AjaxへJSONレスポンスを送る
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['success' => false, 'message' => '削除中にエラーが発生しました'], 500);
+        }
     }
 
     public function showRegistForm() {
@@ -95,7 +156,7 @@ class HomeController extends Controller
     }
 
     // 処理が完了したらregistにリダイレクト
-    return redirect(route('regist'));
+    return redirect(route('regist'))->with('success', '新規登録が完了しました！');
     }
 
     public function show($id)
@@ -111,9 +172,10 @@ class HomeController extends Controller
         $companies = Company::all();
 
         return view('product_edit', compact('products','companies'));
-    }
     
-    public function update(ProductRequest $request, $id)
+    }
+      
+  public function update(ProductRequest $request, $id)
     {
         $products = Product::find($id);
 
@@ -139,9 +201,9 @@ class HomeController extends Controller
             return back();
         }
 
-            return redirect()->route('edit',['id' => $products->id]);
+       return redirect(route('edit',['id' => $products->id]))->with('success','更新しました！');
         
-        }
+    }
     }
 
 

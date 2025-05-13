@@ -11,7 +11,7 @@
     <fieldset>
     <div class="form-group">
         <label for="product_name">商品名<sup class="mark">※</sup></label>
-        <input type="text" class="form-control" id="product_name" name="product_name" value="{{ old('product_name') }}"placeholder="{{ $products->product_name }}">
+        <input type="text" class="form-control" id="product_name" name="product_name" value="{{ old('product_name',$products->product_name) }}">
         @if($errors->has('product_name'))
        <p>{{ $errors->first('product_name') }}</p>
         @endif
@@ -22,7 +22,7 @@
          <select name="company_id">
          <option value="">メーカー名</option>
          @foreach($companies as $company)
-         <option value="{{ $company-> id }}">{{ $company->company_name}}</option>
+         <option value="{{ $company-> id }}"{{old('company_id',$products->company_id)==$company->id?'selected':''}}>{{ $company->company_name}}</option>
          @endforeach
          </select>
          @if($errors->has('company_id'))

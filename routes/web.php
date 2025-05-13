@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,14 +21,14 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/search', [App\Http\Controllers\HomeController::class, 'search'])->name('search');
 
 Route::get('/regist',[App\Http\Controllers\HomeController::class, 'showRegistForm'])->name('regist');
 Route::post('/regist',[App\Http\Controllers\HomeController::class, 'registSubmit'])->name('submit');
 
 Route::get('/detail/{id}', [App\Http\Controllers\HomeController::class, 'show'])->name('detail');
 
-Route::delete('/delete/{id}', [App\Http\Controllers\HomeController::class, 'destroy'])->name('delete');
-Route::post('/delete/{id}', [App\Http\Controllers\HomeController::class, 'destroy'])->name('delete');
+Route::delete('/products/{id}', [App\Http\Controllers\HomeController::class, 'destroy'])->name('product.destroy');
 
 
 Route::get('/edit/{id}', [App\Http\Controllers\HomeController::class, 'edit'])->name('edit');

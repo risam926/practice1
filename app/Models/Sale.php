@@ -19,7 +19,7 @@ class Sale extends Model
     
     ];
 
-    public function products()
+    public function product()
     {
         return $this-> belongsTo('App\Models\Product');
     }
