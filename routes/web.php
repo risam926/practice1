@@ -21,7 +21,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/search', [App\Http\Controllers\HomeController::class, 'search'])->name('search');
 
 Route::get('/regist',[App\Http\Controllers\HomeController::class, 'showRegistForm'])->name('regist');
 Route::post('/regist',[App\Http\Controllers\HomeController::class, 'registSubmit'])->name('submit');

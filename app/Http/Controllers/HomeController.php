@@ -33,7 +33,35 @@ class HomeController extends Controller
     {
     $companies = Company::all();
 
-    $query = Product::query();
+    $query = Product::query()->with('company');
+
+    $keyword    = $request->input('keyword');
+    $company_id = $request->input('company_id');
+    $price_min  = $request->input('price_min');
+    $price_max  = $request->input('price_max');
+    $stock_min  = $request->input('stock_min');
+    $stock_max  = $request->input('stock_max');
+
+
+    if ($keyword) {
+        $query->where('product_name', 'LIKE', '%' . $keyword . '%');
+    }
+    if ($company_id) {
+        $query->where('company_id', $company_id);
+    }
+    if (!is_null($price_min)) {
+        $query->where('price', '>=', $price_min);
+    }
+    if (!is_null($price_max)) {
+        $query->where('price', '<=', $price_max);
+    }
+    if (!is_null($stock_min)) {
+        $query->where('stock', '>=', $stock_min);
+    }
+    if (!is_null($stock_max)) {
+        $query->where('stock', '<=', $stock_max);
+    }
+
 
      $sortColumn = $request->query('column', 'id'); 
 
@@ -47,7 +75,8 @@ class HomeController extends Controller
      if ($sortColumn === 'company_name') {
         $query->join('companies', 'products.company_id', '=', 'companies.id')
               ->orderBy('companies.company_name', $sortDirection)
-              ->select('products.*'); 
+              ->select('products.*', 'companies.company_name');
+    
     } else {
      
         $query->orderBy($sortColumn, $sortDirection);
@@ -55,48 +84,14 @@ class HomeController extends Controller
     
     $products = $query->get();
 
+    if ($request->ajax()) {
+        return view('product_table', compact('products'))->render();
+    }
+
     return view('product', compact('products','companies', 'sortColumn','sortDirection'));
 
     }
 
-    public function search(Request $request)
-    {   
-    
-        $keyword    = $request->input('keyword');
-        $company_id = $request->input('company_id');
-        $price_min  = $request->input('price_min');
-        $price_max  = $request->input('price_max');
-        $stock_min  = $request->input('stock_min');
-        $stock_max  = $request->input('stock_max');
-
-        
-        $query = Product::query()->with('company');
-
-        if ($keyword) {
-            $query->where('product_name', 'LIKE', '%' . $keyword . '%');
-        }
-        if ($company_id) {
-            $query->where('company_id', $company_id);
-        }
-        if (!is_null($price_min)) {
-            $query->where('price', '>=', $price_min);
-        }
-        if (!is_null($price_max)) {
-            $query->where('price', '<=', $price_max);
-        }
-        if (!is_null($stock_min)) {
-            $query->where('stock', '>=', $stock_min);
-        }
-        if (!is_null($stock_max)) {
-            $query->where('stock', '<=', $stock_max);
-        }
-
-        $products = $query->get();
-
-        return response()->json($products);
-    }
-    
-    
 
     public function destroy($id)
     { 
