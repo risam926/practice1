@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Product; // Productモデルを使用
-use App\Models\Sale; // Saleモデルを使用
-
+use App\Models\Product; 
+use App\Models\Sale; 
 class SalesController extends Controller
 {
     public function purchase(Request $request)
@@ -44,7 +43,6 @@ class SalesController extends Controller
         
         $sale = new Sale([
             'product_id' => $productId,
-            // 主キーであるIDと、created_at , updated_atは自動入力されるため不要
         ]);
        
         $sale->save();

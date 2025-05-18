@@ -28,7 +28,7 @@
     <input type="number" name="stock_max" id="stock_max" value="{{ request('stock_max') }}" placeholder="最大値">
     
 
-    <button type="submit" id="search-btn"data-url="{{ route('home') }}">検索</button>
+    <button type="submit" id="search-btn" data-url="{{ route('home') }}">検索</button>
   </form>
 </div>
 
@@ -68,7 +68,7 @@
                 <a class="sort-link" 
                  href="{{ route('home') }}"
                  data-column="price"
-                data-direction="{{ request('column') === 'price' && request('direction') === 'asc' ? 'desc' : 'asc' }}"
+                 data-direction="{{ request('column') === 'price' && request('direction') === 'asc' ? 'desc' : 'asc' }}"
                  data-active="{{ request('column') === 'price' ? 'true' : 'false' }}">
                    価格
                   @if(request('column') === 'price')

@@ -27,7 +27,7 @@ Route::post('/regist',[App\Http\Controllers\HomeController::class, 'registSubmit
 
 Route::get('/detail/{id}', [App\Http\Controllers\HomeController::class, 'show'])->name('detail');
 
-Route::delete('/products/{id}', [App\Http\Controllers\HomeController::class, 'destroy'])->name('product.destroy');
+Route::delete('/products/{id}', [App\Http\Controllers\HomeController::class, 'destroy'])->name('destroy');
 
 
 Route::get('/edit/{id}', [App\Http\Controllers\HomeController::class, 'edit'])->name('edit');

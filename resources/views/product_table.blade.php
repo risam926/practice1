@@ -13,7 +13,7 @@
                   <meta name="csrf-token" content="{{ csrf_token() }}">
                     @csrf
                     @method('DELETE')
-                  <button type="button" class="btn btn-danger delete-btn" data-id="{{ $product->id }}" data-url="{{ route('product.destroy', ['id' => $product->id]) }}">
+                  <button type="button" class="btn btn-danger delete-btn" data-id="{{ $product->id }}" data-url="{{ route('destroy', ['id' => $product->id]) }}">
                      削除
                   </button>
                   </form>
