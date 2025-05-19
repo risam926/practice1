@@ -71,6 +71,7 @@ class HomeController extends Controller
  
      if (!in_array($sortColumn, $allowedColumns)) {
          $sortColumn = 'id';
+          $sortDirection = 'asc';
      }
      if ($sortColumn === 'company_name') {
         $query->join('companies', 'products.company_id', '=', 'companies.id')

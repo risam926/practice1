@@ -47,9 +47,6 @@
                  data-direction="{{ request('column') === 'id' && request('direction') === 'asc' ? 'desc' : 'asc' }}"
                  data-active="{{ request('column') === 'id' ? 'true' : 'false' }}">
                 ID
-                @if(request('column') === 'id')
-                {!! request('direction') === 'asc' ? '⬆' : '⬇' !!}
-                @endif
                 </a>
                 </th>
                 <th scope="col" >商品画像</th>
@@ -60,9 +57,7 @@
                  data-direction="{{ request('column') === 'product_name' && request('direction') === 'asc' ? 'desc' : 'asc' }}"
                  data-active="{{ request('column') === 'product_name' ? 'true' : 'false' }}">
                   商品名
-                @if(request('column') === 'product_name')
-                {!! request('direction') === 'asc' ? '⬆' : '⬇' !!}
-                @endif
+                </a>
                 </th>
                 <th scope="col" > 
                 <a class="sort-link" 
@@ -71,9 +66,6 @@
                  data-direction="{{ request('column') === 'price' && request('direction') === 'asc' ? 'desc' : 'asc' }}"
                  data-active="{{ request('column') === 'price' ? 'true' : 'false' }}">
                    価格
-                  @if(request('column') === 'price')
-                  {!! request('direction') === 'asc' ? '⬆' : '⬇' !!}    
-                  @endif
                 </a>
                 </th>
                 <th scope="col" > 
@@ -83,9 +75,6 @@
                  data-direction="{{ request('column') === 'stock' && request('direction') === 'asc' ? 'desc' : 'asc' }}"
                  data-active="{{ request('column') === 'stock' ? 'true' : 'false' }}">
                    在庫数
-                  @if(request('column') === 'stock')
-                  {!! request('direction') === 'asc' ? '⬆' : '⬇' !!}         
-                  @endif
                 </a>
                 </th>
                 <th scope="col" >
@@ -95,9 +84,7 @@
                  data-direction="{{ request('column') === 'company_name' && request('direction') === 'asc' ? 'desc' : 'asc' }}"
                  data-active="{{ request('column') === 'company_name' ? 'true' : 'false' }}">
                   メーカー名 
-                  @if(request('column')==='company_name')
-                  {!! request('direction') === 'asc' ? '⬆' : '⬇' !!}  
-                  @endif
+                </a>  
                 </th>
                 <th scope="col" ></th>
                 <th scope="col" ></th>

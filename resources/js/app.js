@@ -47,13 +47,20 @@ $(document).ready(function(){
 
     // ソート処理
     $(document).on('click', '.sort-link', function(e) {
-        e.preventDefault();
-        const $link = $(this);
-        fetchData($link.attr('href'), {
-            column: $link.data('column'),
-            direction: $link.data('direction')
-        });
+    e.preventDefault();
+    const $link = $(this);
+    
+    let direction = $link.data('direction');
+   
+    let newDirection = direction === 'asc' ? 'desc' : 'asc';
+    
+    $link.data('direction', newDirection);
+    
+    fetchData($link.attr('href'), {
+        column: $link.data('column'),
+        direction: direction 
     });
+});
 });
 
 
